@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Astro Fest - 1.0</title>
+
+
+
+
 </head>
 <body>
     <main>
@@ -15,12 +19,13 @@
             </p>
         </header>
 
-
-        <form action="https://api.web3forms.com/submit" method="POST">
-
-            <input type="hidden" name="access_key" value="a8ec6244-469e-4f49-88b9-2906719bd799">
-
-
+        
+        <!-- <form action="https://api.web3forms.com/submit" method="POST"> -->
+        <form>
+            
+            <!-- <input type="hidden" name="access_key" value="a8ec6244-469e-4f49-88b9-2906719bd799"> -->
+            
+            
             <section class="input-container">
                 <h2>Register Now</h2>
 
@@ -29,28 +34,28 @@
                     <input type="text" name="lastName" placeholder="Last Name">
 
                     <input type="text" name="facebookLink" placeholder="Your facebook ID">
-
+                    
                     <input type="email" name="email" placeholder="Email Address">
                     <input type="text" name="phoneNumber" placeholder="Phone Number">
                 </div>
             </section>
 
-
+            
             <section class="segments-container">
                 <h2>Segments</h2>
-
+                
                 <ul class="segments">
                     
                     <li class="segment">
                         <input type="checkbox" name="quiz" value="quiz" id="quiz">
                         <label for="quiz">Quiz</label>
                     </li>
-
+                    
                     <li class="segment">
                         <input type="checkbox" name="writing" id="writing" value="writing">
                         <label for="writing">Writing</label>
                     </li>
-
+                    
                     <li class="segment">
                         <input type="checkbox" name="poster" id="poster" value="poster">
                         <label for="poster">Poster Design</label>
@@ -70,7 +75,7 @@
 
             </section>
 
-
+            
             <aside>
                 <input type="checkbox" name="terms" id="terms" value="terms">
                 <label for="terms">I agree to the terms and conditions</label>
@@ -78,7 +83,7 @@
 
             <ul class="lower-part">
                 <li>
-                    <button type="submit">Submit</button>
+                    <button class="submit">Submit</button>
                 </li>
                 <li>
                     <a href="#">Contact For Help</a>
@@ -95,4 +100,6 @@
         </footer>
     </main>
 </body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+<script src="./app.js"></script>
 </html>
