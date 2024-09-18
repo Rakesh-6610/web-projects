@@ -1,45 +1,74 @@
-const MAILCHIMP_API_KEY = "f1b04cc670f762dedae2337d926ea3db-us9";
-const MAILCHIMP_SERVER_PREFIX = "us9";
-const MAILCHIMP_LIST_ID = "3126c4f861";
+const express = require('express');
+const bodyParser = require('body-parser');
+const https = require("https");
+require("dotenv").config();
+
+const app = express();
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static("static"));
 
 
-console.log("hello");
+app.get("/", (req, res) => {
+    res.sendFile(__dirname + "static/index.html");
+})
 
-document.querySelector(".submit").addEventListener("click", () => {
-    const firstName = document.querySelector("input[name='firstName']").value;
-    const lastName = document.querySelector("input[name='lastName']").value;
-    const facebookLink = document.querySelector("input[name='facebookLink']").value;
-    const email = document.querySelector("input[name='email']").value;
-    const phoneNumber = document.querySelector("input[name='phoneNumber']").value;
 
-    const subscriber = {
-        email_address: email,
-        merge_fields: {
-            FNAME: firstName,
-            LNAME: lastName,
-            FBLINK: facebookLink,
-            PHONE: phoneNumber
-        }
+app.post("/register", (req, res) => {
+
+    const fName = req.body.firstName;
+    const lName = req.body.lastName;
+    const fbLink = req.body.facebookLink;
+    const email = req.body.email;
+    const phone = req.body.phoneNumber;
+
+    const segments = [];
+    
+    if (req.body.quiz) { segments.push("quiz") }
+    if (req.body.writing) { segments.push("writing") }
+    if (req.body.poster) { segments.push("poster") }
+    if (req.body.speech) { segments.push("speech") }
+    if (req.body.meme) { segments.push("meme") }
+
+    const url = "https://us9.api.mailchimp.com/3.0/lists/3126c4f861";
+    const options = {
+        method: "POST",
+        auth: `Rakesh:${process.env.MAILCHIMP_API_KEY}`,
     }
 
-    const subscriberHash = CryptoJS.MD5(subscriber.email_address.toLowerCase()).toString();
+    const data = {
+        members: [
+            {
+                email_address: email,
+                status: "subscribed",
+                merge_fields: {
+                    FNAME: fName,
+                    LNAME: lName,
+                    FBLINK: fbLink,
+                    PHONE: phone,
+                    SEGMENTS: String(segments)
+                }
+            }
+        ]
+    }
 
-    fetch(`https://${MAILCHIMP_SERVER_PREFIX}.api.mailchimp.com/3.0/lists/${MAILCHIMP_LIST_ID}/members/${subscriberHash}`, {
-        method: 'PUT',
-        headers: {
-            'Authorization': `Basic ${btoa('subscriber' + MAILCHIMP_API_KEY)}`,
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(subscriber)
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.status === 'subscribed') {
-            console.log('Subscriber added successfully:', data);
+    const jsonData = JSON.stringify(data);
+    const request = https.request(url, options, (response) => {
+        if (response.statusCode === 200) {
+            console.log("Successfully subscribed to the mailchimp list");
         } else {
-            console.error('Error adding subscriber:', data);
+
+            console.log("Failed to subscribe to the mailchimp list");
+            response.on("data", function (data) {
+                console.log(JSON.parse(data));
+            })
         }
     })
-    .catch(error => console.error('Error:', error));
+    request.write(jsonData);
+    request.end();
 
+})
+
+
+app.listen(process.env.PORT || 3000, () => {
+    console.log("Server is running on port 3000");
 })

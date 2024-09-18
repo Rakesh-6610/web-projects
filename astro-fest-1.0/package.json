@@ -1,0 +1,32 @@
+{
+  "name": "astro-fest-1.0",
+  "version": "1.0.0",
+  "description": "a registration page",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/web-projects/astro-fest-1.0.git"
+  },
+  "keywords": [
+    "astro",
+    "fest",
+    "registration",
+    "form"
+  ],
+  "author": "Rakesh Karmaker",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/web-projects/astro-fest-1.0/issues"
+  },
+  "homepage": "https://github.com/web-projects/astro-fest-1.0#readme",
+  "dependencies": {
+    "body-parser": "^1.20.3",
+    "dot-env": "^0.0.1",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0",
+    "https": "^1.0.0"
+  }
+}
