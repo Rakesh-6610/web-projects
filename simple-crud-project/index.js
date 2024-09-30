@@ -5,6 +5,16 @@ const Product = require('./models/product.model.js');
 
 app.use(express.json());
 
+mongoose.connect("mongodb+srv://admin:root@backenddb.njkaw.mongodb.net/Node-api?retryWrites=true&w=majority&appName=BackendDB")
+    .then(() => {
+        console.log("DB connected")
+        app.listen(3000, () => {
+            console.log("Server is running on port 3000");
+        });
+    })
+    .catch((err) => {
+        console.log("DB connection error: ", err)
+    })
 
 
 app.get('/', (req, res) => {
