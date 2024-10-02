@@ -5,7 +5,7 @@ const Product = require('./models/product.model.js');
 const productRoute = require('./routes/product.route.js');
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: False }));
+app.use(express.urlencoded({ extended: false }));
 
 app.use('/api/products', productRoute)
 
